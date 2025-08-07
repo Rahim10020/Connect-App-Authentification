@@ -76,6 +76,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Kanit/Kanit-Regular.ttf
         - asset: assets/fonts/Kanit/Kanit-Bold.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/RobotoMono-Bold.ttf
+        - asset: assets/fonts/Roboto/RobotoMono-Regular.ttf
+        
 
   #
   # For details regarding fonts from package dependencies,
