@@ -81,8 +81,10 @@ flutter:
         - asset: assets/fonts/Kanit/Kanit-Bold.ttf
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto/RobotoMono-Bold.ttf
-        - asset: assets/fonts/Roboto/RobotoMono-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto/Roboto-SemiBold.ttf
         
 
   #

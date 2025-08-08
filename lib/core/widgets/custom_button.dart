@@ -17,8 +17,8 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.isOutlined = false,
     this.isLoading = false,
-    this.width = double.infinity,
-    this.height = 56,
+    this.width = 339,
+    this.height = 48,
   });
 
   @override
@@ -31,8 +31,7 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: isOutlined ? AppGrey.grey300 : AppGreen.green500,
           foregroundColor: isOutlined ? AppGrey.grey900 : Colors.white,
-          side:
-              isOutlined ? BorderSide(color: AppGrey.grey700, width: 1) : null,
+          side: null,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSizes.radiusSmall),
