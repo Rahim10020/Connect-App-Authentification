@@ -1,8 +1,7 @@
 import 'package:connect_app/core/constants/app_assets.dart';
 import 'package:connect_app/core/constants/app_colors.dart';
-import 'package:connect_app/core/constants/app_text_styles.dart';
+import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
-import 'package:connect_app/core/widgets/custom_text_field.dart';
 import 'package:connect_app/core/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  String _selectedCountry = 'TG';
+  bool _obscurePassword = true;
+  String _selectedCountry = 'FR';
 
   @override
   Widget build(BuildContext context) {
@@ -27,80 +27,204 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 60),
 
-                // Logo et titre
+                // Logo
                 const LogoWidget(size: 60),
+
+                const SizedBox(height: 32),
+
+                // Titre
+                Text(
+                  'Connexion',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: AppFonts.roboto,
+                  ),
+                ),
+
+                const SizedBox(height: 50),
+
+                // Champ téléphone
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Téléphone',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppFonts.roboto,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: AppGrey.grey300,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppGrey.grey400),
+                      ),
+                      child: Row(
+                        children: [
+                          // Prefix avec drapeau et code pays
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  _selectedCountry == 'FR'
+                                      ? AppAssets.france
+                                      : AppAssets.togo,
+                                  width: 24,
+                                  height: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                DropdownButton<String>(
+                                  value: _selectedCountry,
+                                  underline: Container(),
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 20,
+                                  ),
+                                  items: const [
+                                    DropdownMenuItem(
+                                      value: 'FR',
+                                      child: Text('+33'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'TG',
+                                      child: Text('+228'),
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedCountry = value!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: 1,
+                            height: 24,
+                            color: AppGrey.grey400,
+                          ),
+                          // Champ de saisie
+                          Expanded(
+                            child: TextFormField(
+                              controller: _phoneController,
+                              keyboardType: TextInputType.phone,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: AppFonts.roboto,
+                                color: Colors.black,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Votre numéro',
+                                hintStyle: TextStyle(
+                                  color: AppGrey.grey600,
+                                  fontSize: 16,
+                                  fontFamily: AppFonts.roboto,
+                                ),
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 16,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Veuillez entrer votre numéro';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
 
                 const SizedBox(height: 24),
 
-                const Text('Connection', style: AppTextStyles.heading1),
-
-                const SizedBox(height: 40),
-
-                // Champ téléphone
-                CustomTextField(
-                  labelText: 'Téléphone',
-                  hintText: 'Votre numéro',
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  prefix: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          _selectedCountry == 'TG'
-                              ? AppAssets.togo
-                              : AppAssets.france,
-                          width: 24,
-                          height: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        DropdownButton<String>(
-                          value: _selectedCountry,
-                          underline: Container(),
-                          items: [
-                            DropdownMenuItem(value: 'TG', child: Text('+228')),
-                            DropdownMenuItem(value: 'FR', child: Text('+33')),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedCountry = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez entrer votre numéro';
-                    }
-                    return null;
-                  },
-                ),
-
-                const SizedBox(height: 20),
-
                 // Champ mot de passe
-                CustomTextField(
-                  labelText: 'Mot de passe',
-                  hintText: 'Votre mot de passe',
-                  controller: _passwordController,
-                  isPassword: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez entrer votre mot de passe';
-                    }
-                    return null;
-                  },
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Mot de passe',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppFonts.roboto,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: AppGrey.grey300,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppGrey.grey400),
+                      ),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        obscureText: _obscurePassword,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: AppFonts.roboto,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Votre mot de passe',
+                          hintStyle: TextStyle(
+                            color: AppGrey.grey600,
+                            fontSize: 16,
+                            fontFamily: AppFonts.roboto,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: AppGrey.grey600,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Veuillez entrer votre mot de passe';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 32),
@@ -112,7 +236,56 @@ class _LoginPageState extends State<LoginPage> {
                   isLoading: _isLoading,
                 ),
 
+                const SizedBox(height: 80),
+
+                // Mot de passe oublié
+                GestureDetector(
+                  onTap: () {
+                    // Navigation vers récupération mot de passe
+                  },
+                  child: Text(
+                    'Mot de passe oublier',
+                    style: TextStyle(
+                      color: AppGreen.green500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: AppFonts.roboto,
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 16),
+
+                // Pas de compte
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pas de compte ? ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: AppFonts.roboto,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Navigation vers inscription
+                      },
+                      child: Text(
+                        'J\'ai pas de compte !',
+                        style: TextStyle(
+                          color: AppGreen.green500,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: AppFonts.roboto,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 40),
               ],
             ),
           ),
@@ -134,14 +307,8 @@ class _LoginPageState extends State<LoginPage> {
         _isLoading = false;
       });
 
-      // Afficher un message de succès
-      Get.snackbar(
-        'Succès',
-        'Connexion réussie !',
-        backgroundColor: AppGreen.green600,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
+      // Navigation vers la page suivante
+      Get.offAllNamed('/home');
     }
   }
 
