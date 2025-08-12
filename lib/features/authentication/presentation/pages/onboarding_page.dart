@@ -46,8 +46,8 @@ class OnboardingPage extends StatelessWidget {
 
               // Illustration des personnes
               Container(
-                width: 280,
-                height: 200,
+                width: 197.36,
+                height: 149,
                 child: Image.asset(
                   AppAssets.greetingImage,
                   fit: BoxFit.contain,

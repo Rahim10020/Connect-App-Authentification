@@ -38,20 +38,20 @@ class _LoginPageState extends State<LoginPage> {
                 // Logo
                 const LogoWidget(size: 60),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 4),
 
                 // Titre
                 Text(
-                  'Connexion',
+                  'Connection',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: AppFonts.roboto,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: AppFonts.kanit,
                   ),
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 61),
 
                 // Champ téléphone
                 Column(
@@ -62,81 +62,102 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: AppFonts.roboto,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: AppFonts.kanit,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Container(
-                      height: 56,
-                      decoration: BoxDecoration(
-                        color: AppGrey.grey300,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppGrey.grey400),
-                      ),
-                      child: Row(
-                        children: [
-                          // Prefix avec drapeau et code pays
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  _selectedCountry == 'FR'
-                                      ? AppAssets.france
-                                      : AppAssets.togo,
-                                  width: 24,
-                                  height: 16,
+                    Row(
+                      children: [
+                        // Container pour le sélecteur de pays
+                        Container(
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: AppGrey.grey300,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: AppGrey.grey400),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Prefix avec drapeau et code pays
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
                                 ),
-                                const SizedBox(width: 4),
-                                DropdownButton<String>(
-                                  value: _selectedCountry,
-                                  underline: Container(),
-                                  icon: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 20,
-                                  ),
-                                  items: const [
-                                    DropdownMenuItem(
-                                      value: 'FR',
-                                      child: Text('+33'),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      _selectedCountry == 'FR'
+                                          ? AppAssets.france
+                                          : AppAssets.togo,
+                                      width: 24,
+                                      height: 16,
                                     ),
-                                    DropdownMenuItem(
-                                      value: 'TG',
-                                      child: Text('+228'),
+                                    const SizedBox(width: 4),
+                                    DropdownButton<String>(
+                                      value: _selectedCountry,
+                                      underline: Container(),
+                                      icon: const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        size: 20,
+                                      ),
+                                      items: const [
+                                        DropdownMenuItem(
+                                          value: 'FR',
+                                          child: Text('FR'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'TG',
+                                          child: Text('TG'),
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedCountry = value!;
+                                        });
+                                      },
                                     ),
                                   ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedCountry = value!;
-                                    });
-                                  },
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        // Champ de saisie étendu
+                        Expanded(
+                          child: Container(
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(color: AppGrey.grey400),
                             ),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 24,
-                            color: AppGrey.grey400,
-                          ),
-                          // Champ de saisie
-                          Expanded(
                             child: TextFormField(
                               controller: _phoneController,
                               keyboardType: TextInputType.phone,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: AppFonts.roboto,
+                                fontFamily: AppFonts.kanit,
                                 color: Colors.black,
                               ),
                               decoration: InputDecoration(
+                                prefixText:
+                                    _selectedCountry == 'FR' ? '+33 ' : '+228 ',
+                                prefixStyle: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: AppFonts.kanit,
+                                  color: AppGrey.grey900,
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 hintText: 'Votre numéro',
                                 hintStyle: TextStyle(
-                                  color: AppGrey.grey600,
+                                  color: AppGrey.grey700,
                                   fontSize: 16,
-                                  fontFamily: AppFonts.roboto,
+                                  fontFamily: AppFonts.kanit,
+                                  fontWeight: FontWeight.w400,
                                 ),
                                 border: InputBorder.none,
                                 contentPadding: const EdgeInsets.symmetric(
@@ -152,8 +173,8 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -169,16 +190,17 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: AppFonts.roboto,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: AppFonts.kanit,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Container(
-                      height: 56,
+                      height: 45,
+                      width: 339,
                       decoration: BoxDecoration(
-                        color: AppGrey.grey300,
-                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: AppGrey.grey400),
                       ),
                       child: TextFormField(
@@ -186,15 +208,16 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: _obscurePassword,
                         style: TextStyle(
                           fontSize: 16,
-                          fontFamily: AppFonts.roboto,
+                          fontFamily: AppFonts.kanit,
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
                           hintText: 'Votre mot de passe',
                           hintStyle: TextStyle(
-                            color: AppGrey.grey600,
+                            color: AppGrey.grey700,
                             fontSize: 16,
-                            fontFamily: AppFonts.roboto,
+                            fontFamily: AppFonts.kanit,
+                            fontWeight: FontWeight.w400,
                           ),
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(
@@ -206,8 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                               _obscurePassword
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: AppGrey.grey600,
-                              size: 20,
+                              color: AppGrey.grey800,
+                              size: 24,
                             ),
                             onPressed: () {
                               setState(() {
