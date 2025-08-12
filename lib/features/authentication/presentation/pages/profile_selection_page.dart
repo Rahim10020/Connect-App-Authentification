@@ -130,9 +130,11 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
                       });
 
                       // Naviguer vers la page suivante après sélection
-                      Future.delayed(const Duration(milliseconds: 200), () {
-                        Get.toNamed('/register', arguments: option.id);
-                      });
+                      if (option.id == 'eleve') {
+                        Future.delayed(const Duration(seconds: 2), () {
+                          Get.toNamed('/phone-registration');
+                        });
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(

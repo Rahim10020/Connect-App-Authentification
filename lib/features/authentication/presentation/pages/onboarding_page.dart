@@ -17,48 +17,58 @@ class OnboardingPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
 
-              // Header avec logo Connect
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: AppGreen.green500),
-                  borderRadius: BorderRadius.circular(AppSizes.radiusBig),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: Text(
-                  'Connect',
-                  style: TextStyle(
-                    color: AppGreen.green700,
-                    fontSize: 14,
-                    fontFamily: AppFonts.kanit,
-                    fontWeight: FontWeight.w500,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: AppGreen.green500),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusBig),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: Text(
+                      'Connect',
+                      style: TextStyle(
+                        color: AppGreen.green700,
+                        fontSize: 14,
+                        fontFamily: AppFonts.kanit,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
 
+              // Header avec Connect
               const SizedBox(height: 60),
 
-              // Illustration des personnes
-              Container(
-                width: 197.36,
-                height: 149,
-                child: Image.asset(
-                  AppAssets.greetingImage,
-                  fit: BoxFit.contain,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Illustration des personnes
+                  Container(
+                    width: 197.36,
+                    height: 149,
+                    child: Image.asset(
+                      AppAssets.greetingImage,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 50),
 
               // Titre principal
               Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Explorez un monde",
@@ -98,7 +108,6 @@ class OnboardingPage extends StatelessWidget {
               // Description
               Text(
                 'Prêt à transformer votre façon\nd\'apprendre et d\'enseigner ? Téléchargez\nmaintenant notre application éducative !',
-                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppGrey.grey700,
                   fontSize: 16,
@@ -115,7 +124,7 @@ class OnboardingPage extends StatelessWidget {
                 children: [
                   CustomButton(
                     text: 'Connexion',
-                    onPressed: () => Get.offNamed('/login'),
+                    onPressed: () => Get.toNamed('/login'),
                   ),
 
                   const SizedBox(height: 16),

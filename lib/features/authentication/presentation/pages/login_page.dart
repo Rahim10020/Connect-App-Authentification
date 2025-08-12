@@ -2,6 +2,7 @@ import 'package:connect_app/core/constants/app_assets.dart';
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
+import 'package:connect_app/core/widgets/flag_text_field.dart';
 import 'package:connect_app/core/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,9 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String selectedCountry = 'FR';
+
   bool _isLoading = false;
   bool _obscurePassword = true;
-  String _selectedCountry = 'FR';
 
   @override
   Widget build(BuildContext context) {
@@ -67,114 +69,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        // Container pour le sélecteur de pays
-                        Container(
-                          height: 45,
-                          decoration: BoxDecoration(
-                            color: AppGrey.grey300,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: AppGrey.grey400),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              // Prefix avec drapeau et code pays
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.asset(
-                                      _selectedCountry == 'FR'
-                                          ? AppAssets.france
-                                          : AppAssets.togo,
-                                      width: 24,
-                                      height: 16,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    DropdownButton<String>(
-                                      value: _selectedCountry,
-                                      underline: Container(),
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 20,
-                                      ),
-                                      items: const [
-                                        DropdownMenuItem(
-                                          value: 'FR',
-                                          child: Text('FR'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 'TG',
-                                          child: Text('TG'),
-                                        ),
-                                      ],
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedCountry = value!;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        // Champ de saisie étendu
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: AppGrey.grey400),
-                            ),
-                            child: TextFormField(
-                              controller: _phoneController,
-                              keyboardType: TextInputType.phone,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: AppFonts.kanit,
-                                color: Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                prefixText:
-                                    _selectedCountry == 'FR' ? '+33 ' : '+228 ',
-                                prefixStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: AppFonts.kanit,
-                                  color: AppGrey.grey900,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                hintText: 'Votre numéro',
-                                hintStyle: TextStyle(
-                                  color: AppGrey.grey700,
-                                  fontSize: 16,
-                                  fontFamily: AppFonts.kanit,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                border: InputBorder.none,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 16,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Veuillez entrer votre numéro';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+                    FlagTextField(
+                      onChanged:
+                          (value) => setState(() {
+                            selectedCountry = value!;
+                          }),
+                      controller: _phoneController,
+                      selectedCountry: selectedCountry,
                     ),
                   ],
                 ),
@@ -196,8 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                      height: 45,
-                      width: 339,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),

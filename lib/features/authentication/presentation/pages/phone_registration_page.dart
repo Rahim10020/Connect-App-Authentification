@@ -3,6 +3,7 @@ import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
 import 'package:connect_app/core/widgets/custom_text_field.dart';
+import 'package:connect_app/core/widgets/flag_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -107,8 +108,8 @@ class _PhoneRegistrationPageState extends State<PhoneRegistrationPage> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: AppFonts.roboto,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: AppFonts.kanit,
                   height: 1.2,
                 ),
               ),
@@ -116,48 +117,14 @@ class _PhoneRegistrationPageState extends State<PhoneRegistrationPage> {
               const SizedBox(height: 50),
 
               // Champ téléphone avec CustomTextField
-              CustomTextField(
-                hintText: 'Votre numéro',
+              FlagTextField(
+                selectedCountry: _selectedCountry,
+                onChanged:
+                    (value) => setState(() {
+                      _selectedCountry = value!;
+                    }),
                 controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                prefix: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        _selectedCountry == 'FR'
-                            ? AppAssets.france
-                            : AppAssets.togo,
-                        width: 24,
-                        height: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      DropdownButton<String>(
-                        value: _selectedCountry,
-                        underline: Container(),
-                        icon: const Icon(Icons.keyboard_arrow_down, size: 20),
-                        items: const [
-                          DropdownMenuItem(value: 'FR', child: Text('+33')),
-                          DropdownMenuItem(value: 'TG', child: Text('+228')),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCountry = value!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Veuillez entrer votre numéro';
-                  }
-                  return null;
-                },
               ),
-
               const SizedBox(height: 40),
 
               // Bouton S'inscrire
