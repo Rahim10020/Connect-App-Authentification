@@ -83,8 +83,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 40),
-
               // Titre
               Text(
                 'Information\nsupplémentaires',
@@ -92,12 +90,12 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                   color: Colors.black,
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
-                  fontFamily: AppFonts.roboto,
+                  fontFamily: AppFonts.kanit,
                   height: 1.2,
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 27),
 
               // Champ Nom
               CustomTextField(
@@ -105,9 +103,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                 hintText: 'Votre adresse de résidence',
                 controller: _lastNameController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Veuillez entrer votre nom';
-                  }
                   return null;
                 },
               ),
@@ -120,9 +115,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                 hintText: 'Votre adresse de résidence',
                 controller: _firstNameController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Veuillez entrer votre prénom';
-                  }
                   return null;
                 },
               ),
@@ -189,9 +181,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                         });
                       },
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Veuillez sélectionner votre genre';
-                        }
                         return null;
                       },
                     ),
@@ -271,9 +260,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                         }
                       },
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Veuillez entrer votre date de naissance';
-                        }
                         return null;
                       },
                     ),
@@ -289,9 +275,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                 hintText: 'Votre adresse de résidence',
                 controller: _addressController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Veuillez entrer votre adresse';
-                  }
                   return null;
                 },
               ),
@@ -311,22 +294,8 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
 
   void _handleContinue() {
     if (_formKey.currentState!.validate()) {
-      // Ici tu peux finaliser l'inscription avec toutes les données
-      Map<String, dynamic> registrationData = {
-        'profile': selectedProfile,
-        'phone': phoneNumber,
-        'countryCode': countryCode,
-        'verificationCode': verificationCode,
-        'password': password,
-        'firstName': _firstNameController.text,
-        'lastName': _lastNameController.text,
-        'gender': _selectedGender,
-        'birthDate': _birthDateController.text,
-        'address': _addressController.text,
-      };
-
-      // Naviguer vers la page d'accueil ou de connexion
-      Get.toNamed('/profile-photo'); // ou '/login'
+      // Naviguer vers la page de photo de profil
+      Get.toNamed('/profile-photo');
     }
   }
 

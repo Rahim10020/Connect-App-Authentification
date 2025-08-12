@@ -105,7 +105,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                 color: Colors.black,
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
-                fontFamily: AppFonts.roboto,
+                fontFamily: AppFonts.kanit,
                 height: 1.2,
               ),
             ),
@@ -149,7 +149,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: AppGreen.green100,
+                        color: AppGreen.green50,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -186,7 +186,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                           Text(
                             'Qui peut voir ma photo de profil',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: AppGrey.grey900,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               fontFamily: AppFonts.roboto,

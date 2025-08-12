@@ -113,12 +113,12 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
 
               // Titre
               Text(
-                'Crée votre mote de passe',
+                'Créez votre mot de passe',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
-                  fontFamily: AppFonts.roboto,
+                  fontFamily: AppFonts.kanit,
                   height: 1.2,
                 ),
               ),
@@ -132,12 +132,6 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 controller: _passwordController,
                 isPassword: true,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Veuillez entrer un mot de passe';
-                  }
-                  if (value.length < 6) {
-                    return 'Le mot de passe doit contenir au moins 6 caractères';
-                  }
                   return null;
                 },
               ),
@@ -151,12 +145,6 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 controller: _confirmPasswordController,
                 isPassword: true,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Veuillez confirmer votre mot de passe';
-                  }
-                  if (value != _passwordController.text) {
-                    return 'Les mots de passe ne correspondent pas';
-                  }
                   return null;
                 },
               ),

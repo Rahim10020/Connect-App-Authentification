@@ -114,7 +114,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                 color: Colors.black,
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
-                fontFamily: AppFonts.roboto,
+                fontFamily: AppFonts.kanit,
                 height: 1.2,
               ),
             ),
@@ -127,7 +127,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
               style: TextStyle(
                 color: AppGrey.grey700,
                 fontSize: 16,
-                fontFamily: AppFonts.roboto,
+                fontFamily: AppFonts.kanit,
                 height: 1.4,
               ),
             ),
@@ -195,36 +195,41 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
             const SizedBox(height: 60),
 
             // Boutons d'action
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Renvoyer
-                GestureDetector(
-                  onTap: _resendCode,
-                  child: Text(
-                    'Renvoyer',
-                    style: TextStyle(
-                      color: AppGreen.green500,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: AppFonts.roboto,
+                Column(
+                  children: [
+                    // Renvoyer
+                    GestureDetector(
+                      onTap: _resendCode,
+                      child: Text(
+                        'Renvoyer',
+                        style: TextStyle(
+                          color: AppGreen.green500,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: AppFonts.kanit,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
 
-                const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                // Changer de mail
-                GestureDetector(
-                  onTap: () => Get.back(),
-                  child: Text(
-                    'Changer de mail',
-                    style: TextStyle(
-                      color: AppGreen.green500,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: AppFonts.roboto,
+                    // Changer de mail
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Text(
+                        'Changer de mail',
+                        style: TextStyle(
+                          color: AppGreen.green500,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: AppFonts.kanit,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
