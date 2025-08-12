@@ -47,7 +47,7 @@ class OnboardingPage extends StatelessWidget {
               ),
 
               // Header avec Connect
-              const SizedBox(height: 60),
+              const SizedBox(height: 25),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -109,7 +109,7 @@ class OnboardingPage extends StatelessWidget {
               Text(
                 'Prêt à transformer votre façon\nd\'apprendre et d\'enseigner ? Téléchargez\nmaintenant notre application éducative !',
                 style: TextStyle(
-                  color: AppGrey.grey700,
+                  color: AppGrey.grey800,
                   fontSize: 16,
                   fontFamily: AppFonts.roboto,
                   fontWeight: FontWeight.w400,

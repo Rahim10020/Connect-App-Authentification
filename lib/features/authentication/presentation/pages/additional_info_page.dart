@@ -57,22 +57,66 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
         ),
         title: Row(
           children: [
-            // Indicateur de progression - 5ème étape (toutes les étapes)
-            ...List.generate(
-              5,
-              (index) => [
-                Expanded(
-                  child: Container(
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: AppGreen.green500,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
+            // Indicateur de progression - 5ème étape
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGreen.green500,
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                if (index < 4) const SizedBox(width: 4),
-              ],
-            ).expand((x) => x),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGreen.green500,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGreen.green500,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGreen.green500,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGreen.green500,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -85,11 +129,11 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
             children: [
               // Titre
               Text(
-                'Information\nsupplémentaires',
+                'Informations\nsupplémentaires',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                   fontFamily: AppFonts.kanit,
                   height: 1.2,
                 ),
@@ -136,10 +180,8 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                   ),
                   const SizedBox(height: 8),
                   Container(
-                    height: 56,
                     decoration: BoxDecoration(
-                      color: AppGrey.grey300,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: AppGrey.grey400),
                     ),
                     child: DropdownButtonFormField<String>(
@@ -205,10 +247,8 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                   ),
                   const SizedBox(height: 8),
                   Container(
-                    height: 56,
                     decoration: BoxDecoration(
-                      color: AppGrey.grey300,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: AppGrey.grey400),
                     ),
                     child: TextFormField(
@@ -236,7 +276,7 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                             _obscureBirthDate
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: AppGrey.grey600,
+                            color: AppGrey.grey800,
                             size: 20,
                           ),
                           onPressed: () {

@@ -99,6 +99,16 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 ),
               ),
             ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -117,7 +127,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                   fontFamily: AppFonts.kanit,
                   height: 1.2,
                 ),

@@ -1,8 +1,6 @@
-import 'package:connect_app/core/constants/app_assets.dart';
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
-import 'package:connect_app/core/widgets/custom_text_field.dart';
 import 'package:connect_app/core/widgets/flag_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -90,6 +88,16 @@ class _PhoneRegistrationPageState extends State<PhoneRegistrationPage> {
                 ),
               ),
             ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -108,7 +116,7 @@ class _PhoneRegistrationPageState extends State<PhoneRegistrationPage> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontFamily: AppFonts.kanit,
                   height: 1.2,
                 ),

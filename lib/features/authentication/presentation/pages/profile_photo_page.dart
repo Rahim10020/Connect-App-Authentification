@@ -1,5 +1,7 @@
+import 'package:connect_app/core/constants/app_assets.dart';
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
+import 'package:connect_app/core/constants/app_icons.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +40,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
         ),
         title: Row(
           children: [
-            // Indicateur de progression - 3ème étape sur 5
+            // Indicateur de progression - 5ème étape
             Expanded(
               child: Container(
                 height: 4,
@@ -73,7 +75,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
               child: Container(
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppGrey.grey400,
+                  color: AppGreen.green500,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -83,7 +85,17 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
               child: Container(
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppGrey.grey400,
+                  color: AppGreen.green500,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGreen.green500,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -96,7 +108,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
 
             // Titre
             Text(
@@ -104,7 +116,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 28,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
                 fontFamily: AppFonts.kanit,
                 height: 1.2,
               ),
@@ -224,11 +236,9 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
 
   Widget _buildDefaultAvatar() {
     return Container(
-      decoration: BoxDecoration(
-        color: AppGreen.green200,
-        shape: BoxShape.circle,
-      ),
-      child: Center(child: Icon(Icons.person, size: 60, color: Colors.black)),
+      width: 145,
+      height: 145,
+      child: Image.asset(AppAssets.maleAvatar, fit: BoxFit.contain),
     );
   }
 
@@ -249,8 +259,8 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                 Text(
                   'Photo de profile',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
+                    color: AppGrey.grey900,
+                    fontSize: 22,
                     fontWeight: FontWeight.w600,
                     fontFamily: AppFonts.roboto,
                   ),
@@ -269,16 +279,18 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                       child: Column(
                         children: [
                           Container(
-                            width: 64,
-                            height: 64,
+                            width: 54,
+                            height: 54,
                             decoration: BoxDecoration(
                               color: AppGreen.green500,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
-                              Icons.camera_alt,
+                            child: Image.asset(
+                              AppIcons.icCamera,
                               color: Colors.white,
-                              size: 32,
+                              fit: BoxFit.contain,
+                              width: 20,
+                              height: 20,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -286,8 +298,8 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                             'Camera',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
                               fontFamily: AppFonts.roboto,
                             ),
                           ),
@@ -306,16 +318,18 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                       child: Column(
                         children: [
                           Container(
-                            width: 64,
-                            height: 64,
+                            width: 54,
+                            height: 54,
                             decoration: BoxDecoration(
                               color: AppGreen.green500,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
-                              Icons.photo_library,
+                            child: Image.asset(
+                              AppIcons.icGallery,
                               color: Colors.white,
-                              size: 32,
+                              fit: BoxFit.contain,
+                              width: 20,
+                              height: 20,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -323,8 +337,8 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                             'Gallery',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
                               fontFamily: AppFonts.roboto,
                             ),
                           ),
@@ -380,8 +394,8 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                 Text(
                   'Qui peut voir ma photo de profil',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
+                    color: AppGrey.grey900,
+                    fontSize: 22,
                     fontWeight: FontWeight.w600,
                     fontFamily: AppFonts.roboto,
                   ),

@@ -61,7 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     ? IconButton(
                       icon: Icon(
                         _obscureText ? Icons.visibility_off : Icons.visibility,
-                        color: Colors.black,
+                        color: AppGrey.grey800,
                       ),
                       onPressed:
                           () => setState(() => _obscureText = !_obscureText),
@@ -69,15 +69,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(color: AppGrey.grey700),
+              borderSide: const BorderSide(color: AppGrey.grey500),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(color: AppGrey.grey700),
+              borderSide: const BorderSide(color: AppGrey.grey500),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(color: AppGrey.grey700, width: 2),
+              borderSide: const BorderSide(color: AppGrey.grey500, width: 2),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),

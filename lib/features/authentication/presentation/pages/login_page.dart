@@ -1,4 +1,3 @@
-import 'package:connect_app/core/constants/app_assets.dart';
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';

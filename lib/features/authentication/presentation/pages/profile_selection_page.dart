@@ -74,9 +74,48 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 4),
             Expanded(
-              flex: 2,
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppGrey.grey400,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
               child: Container(
                 height: 4,
                 decoration: BoxDecoration(
@@ -93,7 +132,7 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
 
             // Titre
             Text(
@@ -101,8 +140,8 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 28,
-                fontWeight: FontWeight.w700,
-                fontFamily: AppFonts.roboto,
+                fontWeight: FontWeight.w500,
+                fontFamily: AppFonts.kanit,
                 height: 1.2,
               ),
             ),
@@ -137,9 +176,11 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
                       }
                     },
                     child: Container(
+                      width: 144,
+                      height: 124,
                       decoration: BoxDecoration(
                         color: isSelected ? AppGreen.green100 : AppGrey.grey300,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(12),
                         border:
                             isSelected
                                 ? Border.all(color: AppGreen.green500, width: 2)
