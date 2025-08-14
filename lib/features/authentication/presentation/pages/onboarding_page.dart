@@ -14,7 +14,7 @@ class OnboardingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,13 +46,11 @@ class OnboardingPage extends StatelessWidget {
                 ],
               ),
 
-              // Header avec Connect
               const SizedBox(height: 25),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Illustration des personnes
                   Container(
                     width: 197.36,
                     height: 149,
@@ -117,74 +115,70 @@ class OnboardingPage extends StatelessWidget {
                 ),
               ),
 
-              const Spacer(),
+              const SizedBox(height: 40),
 
               // Boutons
-              Column(
-                children: [
-                  CustomButton(
-                    text: 'Connexion',
-                    onPressed: () => Get.toNamed('/login'),
+              CustomButton(
+                text: 'Connexion',
+                onPressed: () => Get.toNamed('/login'),
+              ),
+
+              const SizedBox(height: 16),
+
+              CustomButton(
+                text: 'Inscription',
+                onPressed: () => Get.toNamed('/profile-selection'),
+                isOutlined: true,
+              ),
+
+              const SizedBox(height: 24),
+
+              // Conditions d'utilisation
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text:
+                      'En cliquant sur "Connexion", vous acceptez les termes et ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: AppFonts.kanit,
+                    height: 1.4,
                   ),
-
-                  const SizedBox(height: 16),
-
-                  CustomButton(
-                    text: 'Inscription',
-                    onPressed: () => Get.toNamed('/profile-selection'),
-                    isOutlined: true,
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Conditions d'utilisation
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text:
-                          'En cliquant sur "Connexion", vous acceptez les termes et ',
+                  children: [
+                    TextSpan(
+                      text: 'Conditions\ngénérale d\'utilisation',
+                      style: TextStyle(
+                        color: AppGreen.green600,
+                        fontSize: 12,
+                        fontFamily: AppFonts.kanit,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '. Pour plus d\'infos, consultez notre ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         fontFamily: AppFonts.kanit,
-                        height: 1.4,
                       ),
-                      children: [
-                        TextSpan(
-                          text: 'Conditions\ngénérale d\'utilisation',
-                          style: TextStyle(
-                            color: AppGreen.green600,
-                            fontSize: 12,
-                            fontFamily: AppFonts.kanit,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        TextSpan(
-                          text: '. Pour plus d\'infos, consultez notre ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: AppFonts.kanit,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Politique de\nconfidentialité',
-                          style: TextStyle(
-                            color: AppGreen.green600,
-                            fontSize: 12,
-                            fontFamily: AppFonts.kanit,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
                     ),
-                  ),
-
-                  const SizedBox(height: 30),
-                ],
+                    TextSpan(
+                      text: 'Politique de\nconfidentialité',
+                      style: TextStyle(
+                        color: AppGreen.green600,
+                        fontSize: 12,
+                        fontFamily: AppFonts.kanit,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
+              const SizedBox(height: 30),
             ],
           ),
         ),

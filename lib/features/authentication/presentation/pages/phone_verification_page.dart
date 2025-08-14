@@ -38,6 +38,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -46,72 +47,28 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
           onPressed: () => Get.back(),
         ),
         title: Row(
-          children: [
-            // Indicateur de progression - 3ème étape
-            Expanded(
+          children: List.generate(6, (index) {
+            final isActive = index < 3; // 3 étapes complétées
+            return Expanded(
               child: Container(
                 height: 4,
+                margin: EdgeInsets.only(right: index < 5 ? 4 : 0),
                 decoration: BoxDecoration(
-                  color: AppGreen.green500,
+                  color: isActive ? AppGreen.green500 : AppGrey.grey400,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppGreen.green500,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppGreen.green500,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppGrey.grey400,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppGrey.grey400,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppGrey.grey400,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-          ],
+            );
+          }),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(
+          24,
+          24,
+          24,
+          MediaQuery.of(context).viewInsets.bottom + 24,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -144,7 +101,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
 
             const SizedBox(height: 40),
 
-            // Champs de code de vérification
+            // Champs code
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(5, (index) {
@@ -187,14 +144,10 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) {
                       if (value.isNotEmpty && index < 4) {
-                        // Passer au champ suivant
                         _focusNodes[index + 1].requestFocus();
                       } else if (value.isEmpty && index > 0) {
-                        // Revenir au champ précédent
                         _focusNodes[index - 1].requestFocus();
                       }
-
-                      // Vérifier si tous les champs sont remplis
                       _checkCompletion();
                     },
                   ),
@@ -205,43 +158,36 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
             const SizedBox(height: 60),
 
             // Boutons d'action
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    // Renvoyer
-                    GestureDetector(
-                      onTap: _resendCode,
-                      child: Text(
-                        'Renvoyer',
-                        style: TextStyle(
-                          color: AppGreen.green500,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: AppFonts.kanit,
-                        ),
+            Center(
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: _resendCode,
+                    child: Text(
+                      'Renvoyer',
+                      style: TextStyle(
+                        color: AppGreen.green500,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppFonts.kanit,
                       ),
                     ),
-
-                    const SizedBox(height: 20),
-
-                    // Changer de mail
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: Text(
-                        'Changer de mail',
-                        style: TextStyle(
-                          color: AppGreen.green500,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: AppFonts.kanit,
-                        ),
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Text(
+                      'Changer de mail',
+                      style: TextStyle(
+                        color: AppGreen.green500,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppFonts.kanit,
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

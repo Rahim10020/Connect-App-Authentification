@@ -103,132 +103,162 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final screenHeight = MediaQuery.of(context).size.height;
+              final isSmallScreen =
+                  screenHeight < 700; // Détection petits écrans
 
-            // Titre
-            Text(
-              'Photo de profil',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 28,
-                fontWeight: FontWeight.w500,
-                fontFamily: AppFonts.kanit,
-                height: 1.2,
-              ),
-            ),
-
-            const SizedBox(height: 60),
-
-            // Avatar et bouton d'ajout
-            Center(
-              child: Column(
-                children: [
-                  // Avatar avec image par défaut
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: AppGreen.green200,
-                      shape: BoxShape.circle,
-                    ),
-                    child:
-                        selectedImage != null
-                            ? ClipOval(
-                              child: Image.network(
-                                selectedImage!,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return _buildDefaultAvatar();
-                                },
-                              ),
-                            )
-                            : _buildDefaultAvatar(),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Bouton Ajouter une photo
-                  GestureDetector(
-                    onTap: _pickImage,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppGreen.green50,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        'Ajouter une photo',
-                        style: TextStyle(
-                          color: AppGreen.green500,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: AppFonts.roboto,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 60),
-
-            // Option de visibilité
-            GestureDetector(
-              onTap: _showVisibilityModal,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: AppGrey.grey400)),
-                ),
-                child: Row(
+              return ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: screenHeight - 200,
+                ), // Hauteur minimum moins AppBar et padding
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
+                    // Espace adaptatif en haut
+                    SizedBox(height: isSmallScreen ? 16 : 30),
+
+                    // Titre
+                    Text(
+                      'Photo de profil',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppFonts.kanit,
+                        height: 1.2,
+                      ),
+                    ),
+
+                    // Espace adaptatif après titre
+                    SizedBox(height: isSmallScreen ? 32 : 60),
+
+                    // Avatar et bouton d'ajout
+                    Center(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Qui peut voir ma photo de profil',
-                            style: TextStyle(
-                              color: AppGrey.grey900,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: AppFonts.roboto,
+                          // Avatar avec image par défaut
+                          Container(
+                            width: 120,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: AppGreen.green200,
+                              shape: BoxShape.circle,
                             ),
+                            child:
+                                selectedImage != null
+                                    ? ClipOval(
+                                      child: Image.network(
+                                        selectedImage!,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (
+                                          context,
+                                          error,
+                                          stackTrace,
+                                        ) {
+                                          return _buildDefaultAvatar();
+                                        },
+                                      ),
+                                    )
+                                    : _buildDefaultAvatar(),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            _visibility,
-                            style: TextStyle(
-                              color: AppGrey.grey600,
-                              fontSize: 14,
-                              fontFamily: AppFonts.roboto,
+
+                          const SizedBox(height: 20),
+
+                          // Bouton Ajouter une photo
+                          GestureDetector(
+                            onTap: _pickImage,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppGreen.green50,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                'Ajouter une photo',
+                                style: TextStyle(
+                                  color: AppGreen.green500,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: AppFonts.roboto,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: AppGrey.grey600),
+
+                    // Espace adaptatif après avatar
+                    SizedBox(height: isSmallScreen ? 32 : 60),
+
+                    // Option de visibilité
+                    GestureDetector(
+                      onTap: _showVisibilityModal,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: AppGrey.grey400),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Qui peut voir ma photo de profil',
+                                    style: TextStyle(
+                                      color: AppGrey.grey900,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: AppFonts.roboto,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    _visibility,
+                                    style: TextStyle(
+                                      color: AppGrey.grey600,
+                                      fontSize: 14,
+                                      fontFamily: AppFonts.roboto,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(Icons.chevron_right, color: AppGrey.grey600),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Espace flexible ou fixe selon la taille d'écran
+                    if (isSmallScreen)
+                      const SizedBox(
+                        height: 32,
+                      ) // Espace fixe sur petits écrans
+                    else
+                      const Spacer(), // Spacer seulement sur grands écrans
+                    // Bouton Continuer
+                    CustomButton(text: 'Continuer', onPressed: _handleContinue),
+
+                    // Espace adaptatif en bas
+                    SizedBox(height: isSmallScreen ? 16 : 40),
                   ],
                 ),
-              ),
-            ),
-
-            const Spacer(),
-
-            // Bouton Continuer
-            CustomButton(text: 'Continuer', onPressed: _handleContinue),
-
-            const SizedBox(height: 40),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -475,6 +505,6 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
     };
 
     // Naviguer vers la page suivante ou finaliser l'inscription
-    Get.toNamed('/final-registration', arguments: finalData);
+    Get.toNamed('/home', arguments: finalData);
   }
 }

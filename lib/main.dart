@@ -1,5 +1,6 @@
 import 'package:connect_app/features/authentication/presentation/pages/additional_info_page.dart';
 import 'package:connect_app/features/authentication/presentation/pages/create_password_page.dart';
+import 'package:connect_app/features/authentication/presentation/pages/home_page.dart';
 import 'package:connect_app/features/authentication/presentation/pages/launch_page.dart';
 import 'package:connect_app/features/authentication/presentation/pages/login_page.dart';
 import 'package:connect_app/features/authentication/presentation/pages/onboarding_page.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/create-password', page: () => CreatePasswordPage()),
         GetPage(name: '/additional-info', page: () => AdditionalInfoPage()),
         GetPage(name: '/profile-photo', page: () => ProfilePhotoPage()),
+        GetPage(name: '/home', page: () => HomePage()),
       ],
       initialRoute: '/launch',
       defaultTransition: Transition.fadeIn,
