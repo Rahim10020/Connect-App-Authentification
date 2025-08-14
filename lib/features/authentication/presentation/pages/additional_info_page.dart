@@ -173,7 +173,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                     'Genre',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                       fontFamily: AppFonts.roboto,
                     ),
@@ -240,7 +239,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                     'Date de naissance',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                       fontFamily: AppFonts.roboto,
                     ),

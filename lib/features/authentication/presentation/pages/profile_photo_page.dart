@@ -505,6 +505,6 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
     };
 
     // Naviguer vers la page suivante ou finaliser l'inscription
-    Get.toNamed('/home', arguments: finalData);
+    Get.offAllNamed('/home', arguments: finalData);
   }
 }

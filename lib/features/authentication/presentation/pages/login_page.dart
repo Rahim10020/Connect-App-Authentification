@@ -1,6 +1,7 @@
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
+import 'package:connect_app/core/widgets/custom_text_field.dart';
 import 'package:connect_app/core/widgets/flag_text_field.dart';
 import 'package:connect_app/core/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   String selectedCountry = 'FR';
 
   bool _isLoading = false;
-  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Titre
                 Text(
-                  'Connection',
+                  'Connexion',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 32,
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontFamily: AppFonts.kanit,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     FlagTextField(
                       onChanged:
                           (value) => setState(() {
@@ -82,71 +82,14 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 24),
 
                 // Champ mot de passe
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Mot de passe',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: AppFonts.kanit,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: AppGrey.grey400),
-                      ),
-                      child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: _obscurePassword,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: AppFonts.kanit,
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Votre mot de passe',
-                          hintStyle: TextStyle(
-                            color: AppGrey.grey700,
-                            fontSize: 16,
-                            fontFamily: AppFonts.kanit,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 16,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: AppGrey.grey800,
-                              size: 24,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscurePassword = !_obscurePassword;
-                              });
-                            },
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer votre mot de passe';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
+                CustomTextField(
+                  labelText: 'Mot de passe',
+                  hintText: 'Votre mot de passe',
+                  controller: _passwordController,
+                  isPassword: true,
+                  validator: (value) {
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 32),

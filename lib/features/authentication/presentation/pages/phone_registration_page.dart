@@ -101,43 +101,45 @@ class _PhoneRegistrationPageState extends State<PhoneRegistrationPage> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 40),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
 
-              // Titre
-              Text(
-                'Votre Numéro de téléphone',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: AppFonts.kanit,
-                  height: 1.2,
+                // Titre
+                Text(
+                  'Votre Numéro de téléphone',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: AppFonts.kanit,
+                    height: 1.2,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 50),
+                const SizedBox(height: 50),
 
-              // Champ téléphone avec CustomTextField
-              FlagTextField(
-                selectedCountry: _selectedCountry,
-                onChanged:
-                    (value) => setState(() {
-                      _selectedCountry = value!;
-                    }),
-                controller: _phoneController,
-              ),
-              const SizedBox(height: 40),
+                // Champ téléphone avec CustomTextField
+                FlagTextField(
+                  selectedCountry: _selectedCountry,
+                  onChanged:
+                      (value) => setState(() {
+                        _selectedCountry = value!;
+                      }),
+                  controller: _phoneController,
+                ),
+                const SizedBox(height: 40),
 
-              // Bouton S'inscrire
-              CustomButton(text: 'S\'inscrire', onPressed: _handleNext),
-            ],
+                // Bouton S'inscrire
+                CustomButton(text: 'S\'inscrire', onPressed: _handleNext),
+              ],
+            ),
           ),
         ),
       ),

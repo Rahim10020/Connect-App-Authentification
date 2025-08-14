@@ -112,58 +112,60 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 40),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
 
-              // Titre
-              Text(
-                'Créez votre mot de passe',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: AppFonts.kanit,
-                  height: 1.2,
+                // Titre
+                Text(
+                  'Créez votre mot de passe',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: AppFonts.kanit,
+                    height: 1.2,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 50),
+                const SizedBox(height: 50),
 
-              // Champ mot de passe
-              CustomTextField(
-                labelText: 'Mot de passe',
-                hintText: 'Votre mot de passe',
-                controller: _passwordController,
-                isPassword: true,
-                validator: (value) {
-                  return null;
-                },
-              ),
+                // Champ mot de passe
+                CustomTextField(
+                  labelText: 'Mot de passe',
+                  hintText: 'Votre mot de passe',
+                  controller: _passwordController,
+                  isPassword: true,
+                  validator: (value) {
+                    return null;
+                  },
+                ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-              // Champ confirmation mot de passe
-              CustomTextField(
-                labelText: 'Confirmer',
-                hintText: 'Votre mot de passe',
-                controller: _confirmPasswordController,
-                isPassword: true,
-                validator: (value) {
-                  return null;
-                },
-              ),
+                // Champ confirmation mot de passe
+                CustomTextField(
+                  labelText: 'Confirmer',
+                  hintText: 'Votre mot de passe',
+                  controller: _confirmPasswordController,
+                  isPassword: true,
+                  validator: (value) {
+                    return null;
+                  },
+                ),
 
-              const SizedBox(height: 40),
+                const SizedBox(height: 40),
 
-              // Bouton Continuer
-              CustomButton(text: 'Continuer', onPressed: _handleContinue),
-            ],
+                // Bouton Continuer
+                CustomButton(text: 'Continuer', onPressed: _handleContinue),
+              ],
+            ),
           ),
         ),
       ),

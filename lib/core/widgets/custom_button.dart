@@ -48,14 +48,16 @@ class CustomButton extends StatelessWidget {
                       height: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppGreen.green500,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Text(
                       'Chargement',
                       style: TextStyle(
-                        color: isOutlined ? AppGrey.grey900 : Colors.white,
+                        color: AppGreen.green500,
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         fontFamily: AppFonts.roboto,
