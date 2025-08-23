@@ -4,11 +4,11 @@ import 'package:connect_app/core/constants/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class FlagTextField extends StatelessWidget {
-  String selectedCountry;
-  TextEditingController controller;
-  void Function(String?)? onChanged;
+  final String selectedCountry;
+  final TextEditingController controller;
+  final void Function(String?)? onChanged;
 
-  FlagTextField({
+  const FlagTextField({
     super.key,
     this.selectedCountry = 'FR',
     required this.onChanged,
