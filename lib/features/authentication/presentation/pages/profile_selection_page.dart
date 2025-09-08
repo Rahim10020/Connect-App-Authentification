@@ -171,7 +171,10 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
                       // Naviguer vers la page suivante après sélection
                       if (option.id == 'eleve') {
                         Future.delayed(const Duration(seconds: 2), () {
-                          Get.toNamed('/phone-registration');
+                          Get.toNamed(
+                            '/email-registration',
+                            arguments: option.id,
+                          );
                         });
                       }
                     },

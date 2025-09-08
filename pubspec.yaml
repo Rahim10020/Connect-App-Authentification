@@ -38,6 +38,8 @@ dependencies:
   flutter_svg: ^2.2.0
   image_picker:
   image_cropper:
+  http:
+  get_storage:
 
 dev_dependencies:
   flutter_test:
