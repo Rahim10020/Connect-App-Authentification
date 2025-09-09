@@ -163,7 +163,6 @@ class AuthService {
 
         // Récupérer le token (si fourni dans la réponse de login)
         // Note: Selon la doc, login ne retourne que l'user, pas le token
-        // Tu devras peut-être utiliser un autre endpoint pour le token
 
         await _storage.write(_userKey, user.toJson());
 
