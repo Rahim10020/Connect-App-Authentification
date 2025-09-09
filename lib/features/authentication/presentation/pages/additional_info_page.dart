@@ -1,5 +1,6 @@
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
+import 'package:connect_app/core/controllers/auth_controller.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
 import 'package:connect_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,28 +21,19 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _selectedGender = '';
-  bool _obscureBirthDate = true;
+  DateTime? _selectedDate;
 
-  String? phoneNumber;
-  String? countryCode;
-  String? selectedProfile;
-  String? verificationCode;
-  String? password;
+  // Données depuis les pages précédentes
+  Map<String, dynamic>? registrationData;
 
   final List<String> genderOptions = ['Homme', 'Femme', 'Autre'];
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   void initState() {
     super.initState();
-    // Récupérer les données depuis la page précédente
-    final arguments = Get.arguments as Map<String, dynamic>?;
-    if (arguments != null) {
-      selectedProfile = arguments['profile'];
-      phoneNumber = arguments['phone'];
-      countryCode = arguments['countryCode'];
-      verificationCode = arguments['verificationCode'];
-      password = arguments['password'];
-    }
+    // Récupérer les données depuis les pages précédentes
+    registrationData = Get.arguments as Map<String, dynamic>?;
   }
 
   @override
@@ -57,7 +49,7 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
         ),
         title: Row(
           children: [
-            // Indicateur de progression - 5ème étape
+            // Indicateur de progression - 3ème étape
             Expanded(
               child: Container(
                 height: 4,
@@ -92,7 +84,7 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
               child: Container(
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppGreen.green500,
+                  color: AppGrey.grey400,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -102,7 +94,7 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
               child: Container(
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppGreen.green500,
+                  color: AppGrey.grey400,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -143,10 +135,13 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
 
               // Champ Nom
               CustomTextField(
-                labelText: 'Nom',
-                hintText: 'Votre adresse de résidence',
+                labelText: 'Nom *',
+                hintText: 'Votre nom de famille',
                 controller: _lastNameController,
                 validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Le nom est obligatoire';
+                  }
                   return null;
                 },
               ),
@@ -155,10 +150,13 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
 
               // Champ Prénom
               CustomTextField(
-                labelText: 'Prénom',
-                hintText: 'Votre adresse de résidence',
+                labelText: 'Prénom *',
+                hintText: 'Votre prénom',
                 controller: _firstNameController,
                 validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Le prénom est obligatoire';
+                  }
                   return null;
                 },
               ),
@@ -186,7 +184,7 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                     child: DropdownButtonFormField<String>(
                       value: _selectedGender.isEmpty ? null : _selectedGender,
                       decoration: InputDecoration(
-                        hintText: 'Votre genre',
+                        hintText: 'Sélectionnez votre genre',
                         hintStyle: TextStyle(
                           color: AppGrey.grey600,
                           fontSize: 16,
@@ -222,6 +220,7 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                         });
                       },
                       validator: (value) {
+                        // Genre optionnel
                         return null;
                       },
                     ),
@@ -251,14 +250,14 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                     ),
                     child: TextFormField(
                       controller: _birthDateController,
-                      obscureText: _obscureBirthDate,
+                      readOnly: true, // Empêcher la saisie directe
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: AppFonts.roboto,
                         color: Colors.black,
                       ),
                       decoration: InputDecoration(
-                        hintText: '--/--/--',
+                        hintText: '--/--/----',
                         hintStyle: TextStyle(
                           color: AppGrey.grey600,
                           fontSize: 16,
@@ -271,33 +270,16 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureBirthDate
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            Icons.calendar_today,
                             color: AppGrey.grey800,
                             size: 20,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureBirthDate = !_obscureBirthDate;
-                            });
-                          },
+                          onPressed: _selectDate,
                         ),
                       ),
-                      onTap: () async {
-                        // Ouvrir le sélecteur de date
-                        final DateTime? picked = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                        );
-                        if (picked != null) {
-                          _birthDateController.text =
-                              '${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}';
-                        }
-                      },
+                      onTap: _selectDate,
                       validator: (value) {
+                        // Date de naissance optionnelle
                         return null;
                       },
                     ),
@@ -313,14 +295,69 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
                 hintText: 'Votre adresse de résidence',
                 controller: _addressController,
                 validator: (value) {
+                  // Adresse optionnelle
                   return null;
                 },
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
+
+              // Affichage des erreurs
+              Obx(() {
+                if (authController.errorMessage.isNotEmpty) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppRed.red50,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppRed.red300),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          color: AppRed.red500,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            authController.errorMessage,
+                            style: TextStyle(
+                              color: AppRed.red700,
+                              fontSize: 14,
+                              fontFamily: AppFonts.roboto,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: AppRed.red500,
+                            size: 16,
+                          ),
+                          onPressed: authController.clearError,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              }),
+
+              const SizedBox(height: 20),
 
               // Bouton Continuer
-              CustomButton(text: 'Continuer', onPressed: _handleContinue),
+              Obx(
+                () => CustomButton(
+                  text: 'Créer le compte',
+                  onPressed: _handleContinue,
+                  isLoading: authController.isLoading,
+                ),
+              ),
 
               const SizedBox(height: 40),
             ],
@@ -330,10 +367,111 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
     );
   }
 
-  void _handleContinue() {
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate:
+          _selectedDate ??
+          DateTime.now().subtract(
+            const Duration(days: 6570),
+          ), // 18 ans par défaut
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppGreen.green500,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        _birthDateController.text =
+            '${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}';
+      });
+    }
+  }
+
+  void _handleContinue() async {
+    // Effacer les erreurs précédentes
+    authController.clearError();
+
     if (_formKey.currentState!.validate()) {
-      // Naviguer vers la page de photo de profil
-      Get.toNamed('/profile-photo');
+      // Préparer les données complètes pour l'inscription
+      final email = registrationData?['email'] ?? '';
+      final firstName = _firstNameController.text.trim();
+      final lastName = _lastNameController.text.trim();
+      final password = registrationData?['password'] ?? '';
+      final passwordConfirmation =
+          registrationData?['passwordConfirmation'] ?? '';
+      final phoneNumber =
+          registrationData?['phone']?.isNotEmpty == true
+              ? registrationData!['phone']
+              : null;
+
+      // Convertir le genre en format API
+      String? sexForApi;
+      switch (_selectedGender) {
+        case 'Homme':
+          sexForApi = 'M';
+          break;
+        case 'Femme':
+          sexForApi = 'F';
+          break;
+        default:
+          sexForApi = null;
+      }
+
+      // Convertir la date en format API (YYYY-MM-DD)
+      String? birthdayDateForApi;
+      if (_selectedDate != null) {
+        birthdayDateForApi = authController.formatDateForApi(_selectedDate!);
+      }
+
+      // Effectuer l'inscription
+      final success = await authController.register(
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+        phoneNumber: phoneNumber,
+        birthdayDate: birthdayDateForApi,
+        sex: sexForApi,
+      );
+
+      if (success) {
+        authController.showSuccessMessage('Compte créé avec succès !');
+
+        // Demander immédiatement l'OTP pour vérifier l'email
+        final otpResponse = await authController.requestOtp(email: email);
+
+        if (otpResponse != null) {
+          // Naviguer vers la page de vérification OTP
+          Get.toNamed(
+            '/verification',
+            arguments: {
+              'email': email,
+              'otpId': otpResponse.otpId,
+              'expiresAt': otpResponse.expiresAt,
+              'fromRegistration': true,
+            },
+          );
+        } else {
+          // En cas d'erreur OTP, on reste sur cette page
+          // L'erreur s'affichera automatiquement via Obx()
+        }
+      }
+      // En cas d'erreur d'inscription, le message s'affiche automatiquement via Obx()
     }
   }
 

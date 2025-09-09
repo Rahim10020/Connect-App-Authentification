@@ -1,8 +1,8 @@
 import 'package:connect_app/core/constants/app_colors.dart';
 import 'package:connect_app/core/constants/app_fonts.dart';
+import 'package:connect_app/core/controllers/auth_controller.dart';
 import 'package:connect_app/core/widgets/custom_button.dart';
 import 'package:connect_app/core/widgets/custom_text_field.dart';
-import 'package:connect_app/core/widgets/flag_text_field.dart';
 import 'package:connect_app/core/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,12 +15,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String selectedCountry = 'FR';
 
-  bool _isLoading = false;
+  // Récupérer le contrôleur d'authentification
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,29 +54,21 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 61),
 
-                // Champ téléphone
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Téléphone',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: AppFonts.kanit,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    FlagTextField(
-                      onChanged:
-                          (value) => setState(() {
-                            selectedCountry = value!;
-                          }),
-                      controller: _phoneController,
-                      selectedCountry: selectedCountry,
-                    ),
-                  ],
+                // Champ email
+                CustomTextField(
+                  labelText: 'Email',
+                  hintText: 'votre.email@example.com',
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez saisir votre email';
+                    }
+                    if (!authController.isEmailValid(value)) {
+                      return 'Veuillez saisir un email valide';
+                    }
+                    return null;
+                  },
                 ),
 
                 const SizedBox(height: 24),
@@ -88,28 +80,88 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _passwordController,
                   isPassword: true,
                   validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez saisir votre mot de passe';
+                    }
                     return null;
                   },
                 ),
 
                 const SizedBox(height: 32),
 
-                // Bouton de connexion
-                CustomButton(
-                  text: 'Se connecter',
-                  onPressed: _handleLogin,
-                  isLoading: _isLoading,
+                // Bouton de connexion avec état de chargement
+                Obx(
+                  () => CustomButton(
+                    text: 'Se connecter',
+                    onPressed: _handleLogin,
+                    isLoading: authController.isLoading,
+                  ),
                 ),
 
-                const SizedBox(height: 80),
+                const SizedBox(height: 20),
+
+                // Affichage des erreurs
+                Obx(() {
+                  if (authController.errorMessage.isNotEmpty) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppRed.red50,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: AppRed.red300),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            color: AppRed.red500,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              authController.errorMessage,
+                              style: TextStyle(
+                                color: AppRed.red700,
+                                fontSize: 14,
+                                fontFamily: AppFonts.roboto,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: AppRed.red500,
+                              size: 16,
+                            ),
+                            onPressed: authController.clearError,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+
+                const SizedBox(height: 40),
 
                 // Mot de passe oublié
                 GestureDetector(
                   onTap: () {
-                    // Navigation vers récupération mot de passe
+                    // laisser pour le moment
+                    Get.snackbar(
+                      'Info',
+                      'Fonctionnalité bientôt disponible',
+                      backgroundColor: AppGreen.green500,
+                      colorText: Colors.white,
+                      snackPosition: SnackPosition.TOP,
+                    );
                   },
                   child: Text(
-                    'Mot de passe oublier',
+                    'Mot de passe oublié ?',
                     style: TextStyle(
                       color: AppGreen.green500,
                       fontSize: 16,
@@ -135,10 +187,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigation vers inscription
+                        // Effacer les erreurs et naviguer vers l'inscription
+                        authController.clearError();
+                        Get.toNamed('/profile-selection');
                       },
                       child: Text(
-                        'J\'ai pas de compte !',
+                        'Créer un compte !',
                         style: TextStyle(
                           color: AppGreen.green500,
                           fontSize: 16,
@@ -160,26 +214,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLogin() async {
+    // Effacer les erreurs précédentes
+    authController.clearError();
+
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
+      final success = await authController.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
 
-      // Simuler une connexion
-      await Future.delayed(const Duration(seconds: 2));
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      // Navigation vers la page suivante
-      Get.offAllNamed('/home');
+      if (success) {
+        // Connexion réussie, GetX se charge de la navigation via AuthMiddleware
+        authController.showSuccessMessage('Connexion réussie !');
+        Get.offAllNamed('/home');
+      }
+      // En cas d'erreur, le message s'affiche automatiquement via Obx()
     }
   }
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
