@@ -358,22 +358,45 @@ class _VerificationPageState extends State<VerificationPage> {
     final success = await authController.verifyOtp(email: email!, code: code);
 
     if (success) {
+      print('🎉 Vérification réussie, navigation vers la page d\'accueil');
       authController.showSuccessMessage('Email vérifié avec succès !');
 
+      // Attendre un peu pour s'assurer que les données sont mises à jour
+      await Future.delayed(const Duration(milliseconds: 300));
+
       // Déterminer la navigation suivante
-      if (fromRegistration == true) {
-        // Si on vient de l'inscription, aller à la photo de profil
-        Get.toNamed('/profile-photo');
-      } else {
-        // Sinon, aller à l'accueil
+      try {
+        print('🏠 Navigation vers /home');
+        if (fromRegistration == true) {
+          // Si on vient de l'inscription, aller directement à l'accueil
+          // (la photo de profil peut être configurée plus tard)
+          Get.offAllNamed('/home');
+        } else {
+          // Sinon, aller à l'accueil
+          Get.offAllNamed('/home');
+        }
+        print('✅ Navigation réussie');
+      } catch (e) {
+        print('❌ Erreur de navigation: $e');
+        // En cas d'erreur de navigation, forcer le rafraîchissement de l'état
+        authController.refreshUserData();
         Get.offAllNamed('/home');
       }
+    } else {
+      // Vérifier si c'est une erreur d'expiration OTP
+      final errorMessage = authController.errorMessage.toLowerCase();
+      if (errorMessage.contains('expir') || errorMessage.contains('invalid')) {
+        print('⏰ OTP expiré ou invalide, suggestion de renvoi');
+        // L'erreur s'affiche automatiquement via Obx()
+        // Le bouton "Renvoyer le code" sera automatiquement activé
+      }
     }
-    // En cas d'erreur, le message s'affiche automatiquement via Obx()
   }
 
   void _resendCode() async {
     if (email == null) return;
+
+    print('🔄 Renvoi du code OTP pour $email');
 
     // Effacer tous les champs
     for (var controller in _controllers) {
@@ -385,6 +408,7 @@ class _VerificationPageState extends State<VerificationPage> {
     final otpResponse = await authController.requestOtp(email: email!);
 
     if (otpResponse != null) {
+      print('✅ Nouveau code OTP envoyé');
       // Mettre à jour les données
       setState(() {
         expiresAt = otpResponse.expiresAt;
@@ -395,8 +419,14 @@ class _VerificationPageState extends State<VerificationPage> {
       _startCountdown();
 
       authController.showSuccessMessage('Nouveau code envoyé !');
+    } else {
+      print('❌ Échec du renvoi du code OTP');
+      // En cas d'erreur, le message s'affiche automatiquement via Obx()
+      // Afficher un message d'aide supplémentaire
+      authController.showErrorMessage(
+        'Impossible d\'envoyer un nouveau code. Veuillez réessayer dans quelques minutes.'
+      );
     }
-    // En cas d'erreur, le message s'affiche automatiquement via Obx()
   }
 
   @override

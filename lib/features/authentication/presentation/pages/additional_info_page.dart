@@ -452,10 +452,16 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
       if (success) {
         authController.showSuccessMessage('Compte créé avec succès !');
 
-        // Demander immédiatement l'OTP pour vérifier l'email
+        // Attendre un peu pour s'assurer que les données sont sauvegardées
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        print('📧 Demande d\'OTP pour l\'email: $email');
+
+        // Demander l'OTP pour vérifier l'email
         final otpResponse = await authController.requestOtp(email: email);
 
         if (otpResponse != null) {
+          print('✅ OTP obtenu avec succès, navigation vers vérification');
           // Naviguer vers la page de vérification OTP
           Get.toNamed(
             '/verification',
@@ -467,8 +473,13 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
             },
           );
         } else {
-          // En cas d'erreur OTP, on reste sur cette page
-          // L'erreur s'affichera automatiquement via Obx()
+          print('❌ Échec de l\'obtention de l\'OTP');
+          // En cas d'erreur OTP, afficher un message d'erreur
+          authController.showErrorMessage(
+            'Erreur lors de l\'envoi du code de vérification. '
+            'Si vous avez déjà essayé de vous inscrire avec cet email, '
+            'veuillez attendre quelques minutes avant de réessayer.'
+          );
         }
       }
       // En cas d'erreur d'inscription, le message s'affiche automatiquement via Obx()

@@ -318,17 +318,47 @@ class AuthService {
     if (data.containsKey('detail') && data['detail'] is List) {
       final details = data['detail'] as List;
       if (details.isNotEmpty) {
-        return details.first['msg'] ?? 'Erreur de validation';
+        final msg = details.first['msg'] ?? 'Erreur de validation';
+        // Améliorer les messages d'erreur OTP
+        if (msg.toLowerCase().contains('otp')) {
+          if (msg.toLowerCase().contains('expir')) {
+            return 'Le code de vérification a expiré. Veuillez demander un nouveau code.';
+          }
+          if (msg.toLowerCase().contains('invalid')) {
+            return 'Code de vérification invalide. Vérifiez le code ou demandez-en un nouveau.';
+          }
+        }
+        return msg;
       }
     }
 
     // Autres messages d'erreur
     if (data.containsKey('detail') && data['detail'] is String) {
-      return data['detail'];
+      final detail = data['detail'];
+      // Améliorer les messages d'erreur OTP
+      if (detail.toLowerCase().contains('otp')) {
+        if (detail.toLowerCase().contains('expir')) {
+          return 'Le code de vérification a expiré. Veuillez demander un nouveau code.';
+        }
+        if (detail.toLowerCase().contains('invalid') || detail.toLowerCase().contains('used')) {
+          return 'Code de vérification invalide ou déjà utilisé. Veuillez demander un nouveau code.';
+        }
+      }
+      return detail;
     }
 
     if (data.containsKey('message')) {
-      return data['message'];
+      final message = data['message'];
+      // Améliorer les messages d'erreur OTP
+      if (message.toLowerCase().contains('otp')) {
+        if (message.toLowerCase().contains('expir')) {
+          return 'Le code de vérification a expiré. Veuillez demander un nouveau code.';
+        }
+        if (message.toLowerCase().contains('invalid') || message.toLowerCase().contains('used')) {
+          return 'Code de vérification invalide ou déjà utilisé. Veuillez demander un nouveau code.';
+        }
+      }
+      return message;
     }
 
     return 'Une erreur est survenue';

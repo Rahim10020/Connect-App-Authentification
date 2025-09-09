@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/verification',
           page: () => VerificationPage(),
-          middlewares: [GuestMiddleware()],
+          // Pas de middleware pour la page de vérification car elle fait partie du flux d'inscription
         ),
         GetPage(
           name: '/create-password',
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/home',
           page: () => HomePage(),
-          middlewares: [AuthMiddleware(), VerificationMiddleware()],
+          middlewares: [AuthMiddleware()],
         ),
       ],
 

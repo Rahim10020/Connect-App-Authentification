@@ -32,6 +32,9 @@ class _EmailRegistrationPageState extends State<EmailRegistrationPage> {
     super.initState();
     // Récupérer le profil sélectionné depuis la page précédente
     selectedProfile = Get.arguments as String?;
+
+    // Préparer une nouvelle session d'inscription
+    authController.prepareNewRegistration();
   }
 
   @override

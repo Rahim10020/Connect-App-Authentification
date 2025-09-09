@@ -22,17 +22,25 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print('🎯 AuthController initialisé');
     _checkAuthStatus();
   }
 
   /// Vérifier le statut d'authentification au démarrage
   void _checkAuthStatus() {
+    print('🔍 Vérification du statut d\'authentification');
     final user = _authService.getCurrentUserFromStorage();
     final token = _authService.getToken();
+
+    print('👤 Utilisateur depuis le stockage: ${user?.email}');
+    print('🔑 Token depuis le stockage: ${token != null ? 'présent' : 'absent'}');
 
     if (user != null && token != null) {
       _currentUser.value = user;
       _isLoggedIn.value = true;
+      print('✅ Utilisateur connecté restauré');
+    } else {
+      print('❌ Aucun utilisateur connecté trouvé');
     }
   }
 
@@ -100,16 +108,21 @@ class AuthController extends GetxController {
       _isLoading.value = true;
       _errorMessage.value = '';
 
+      print('📤 Demande d\'OTP pour $email de type $type');
+
       final response = await _authService.requestOtp(email: email, type: type);
 
       if (response.success && response.data != null) {
+        print('✅ OTP envoyé avec succès');
         return response.data!;
       } else {
+        print('❌ Échec d\'envoi OTP: ${response.error}');
         _errorMessage.value =
             response.error ?? 'Erreur lors de l\'envoi du code';
         return null;
       }
     } catch (e) {
+      print('💥 Erreur lors de la demande OTP: $e');
       _errorMessage.value = 'Erreur inattendue: $e';
       return null;
     } finally {
@@ -123,17 +136,26 @@ class AuthController extends GetxController {
       _isLoading.value = true;
       _errorMessage.value = '';
 
+      print('🔍 Vérification OTP pour $email avec code $code');
+
       final response = await _authService.verifyOtp(email: email, code: code);
 
       if (response.success && response.data != null) {
+        print('✅ OTP vérifié avec succès');
         // Mettre à jour l'utilisateur avec les nouvelles données (is_verified = true)
         _currentUser.value = response.data!.user;
+        // S'assurer que l'état de connexion est mis à jour
+        _isLoggedIn.value = true;
+        print('👤 Utilisateur mis à jour: ${_currentUser.value?.email}');
+        print('🔐 État de connexion: $_isLoggedIn.value');
         return true;
       } else {
+        print('❌ Échec de vérification OTP: ${response.error}');
         _errorMessage.value = response.error ?? 'Code de vérification invalide';
         return false;
       }
     } catch (e) {
+      print('💥 Erreur lors de la vérification OTP: $e');
       _errorMessage.value = 'Erreur inattendue: $e';
       return false;
     } finally {
@@ -186,12 +208,37 @@ class AuthController extends GetxController {
 
       if (response.success && response.data != null) {
         _currentUser.value = response.data!;
+        // S'assurer que l'état de connexion est cohérent
+        _isLoggedIn.value = true;
       }
     } catch (e) {
       print('Erreur lors du rafraîchissement des données utilisateur: $e');
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  /// Forcer la mise à jour du statut de vérification
+  void updateVerificationStatus() {
+    final user = _authService.getCurrentUserFromStorage();
+    if (user != null) {
+      _currentUser.value = user;
+      _isLoggedIn.value = true;
+    }
+  }
+
+  /// Effacer les erreurs précédentes (utile pour recommencer un processus)
+  void clearAllErrors() {
+    _errorMessage.value = '';
+  }
+
+  /// Préparer une nouvelle session d'inscription
+  void prepareNewRegistration() {
+    clearAllErrors();
+    // Effacer les données utilisateur précédentes si elles existent
+    _currentUser.value = null;
+    _isLoggedIn.value = false;
+    print('🧹 Session d\'inscription préparée');
   }
 
   /// Mettre à jour le profil utilisateur
