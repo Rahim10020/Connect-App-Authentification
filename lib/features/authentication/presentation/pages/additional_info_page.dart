@@ -455,13 +455,10 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
         // Attendre un peu pour s'assurer que les données sont sauvegardées
         await Future.delayed(const Duration(milliseconds: 500));
 
-        print('📧 Demande d\'OTP pour l\'email: $email');
-
         // Demander l'OTP pour vérifier l'email
         final otpResponse = await authController.requestOtp(email: email);
 
         if (otpResponse != null) {
-          print('✅ OTP obtenu avec succès, navigation vers vérification');
           // Naviguer vers la page de vérification OTP
           Get.toNamed(
             '/verification',
@@ -473,7 +470,6 @@ class _AdditionalInfoPageState extends State<AdditionalInfoPage> {
             },
           );
         } else {
-          print('❌ Échec de l\'obtention de l\'OTP');
           // En cas d'erreur OTP, afficher un message d'erreur
           authController.showErrorMessage(
             'Erreur lors de l\'envoi du code de vérification. '

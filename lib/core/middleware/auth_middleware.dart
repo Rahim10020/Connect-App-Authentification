@@ -11,16 +11,11 @@ class AuthMiddleware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     final authController = Get.find<AuthController>();
 
-    print('🔒 AuthMiddleware: Vérification pour la route $route');
-    print('🔑 État de connexion: ${authController.isLoggedIn}');
-
     // Si l'utilisateur n'est pas connecté, rediriger vers onboarding
     if (!authController.isLoggedIn) {
-      print('🚫 Utilisateur non connecté, redirection vers /onboarding');
       return const RouteSettings(name: '/onboarding');
     }
 
-    print('✅ Utilisateur connecté, accès autorisé');
     return null;
   }
 }

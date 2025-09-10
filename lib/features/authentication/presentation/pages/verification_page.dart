@@ -366,7 +366,6 @@ class _VerificationPageState extends State<VerificationPage> {
 
       // Déterminer la navigation suivante
       try {
-        print('🏠 Navigation vers /home');
         if (fromRegistration == true) {
           // Si on vient de l'inscription, aller directement à l'accueil
           // (la photo de profil peut être configurée plus tard)
@@ -375,9 +374,7 @@ class _VerificationPageState extends State<VerificationPage> {
           // Sinon, aller à l'accueil
           Get.offAllNamed('/home');
         }
-        print('✅ Navigation réussie');
       } catch (e) {
-        print('❌ Erreur de navigation: $e');
         // En cas d'erreur de navigation, forcer le rafraîchissement de l'état
         authController.refreshUserData();
         Get.offAllNamed('/home');
@@ -386,7 +383,6 @@ class _VerificationPageState extends State<VerificationPage> {
       // Vérifier si c'est une erreur d'expiration OTP
       final errorMessage = authController.errorMessage.toLowerCase();
       if (errorMessage.contains('expir') || errorMessage.contains('invalid')) {
-        print('⏰ OTP expiré ou invalide, suggestion de renvoi');
         // L'erreur s'affiche automatiquement via Obx()
         // Le bouton "Renvoyer le code" sera automatiquement activé
       }
@@ -395,8 +391,6 @@ class _VerificationPageState extends State<VerificationPage> {
 
   void _resendCode() async {
     if (email == null) return;
-
-    print('🔄 Renvoi du code OTP pour $email');
 
     // Effacer tous les champs
     for (var controller in _controllers) {
@@ -408,7 +402,6 @@ class _VerificationPageState extends State<VerificationPage> {
     final otpResponse = await authController.requestOtp(email: email!);
 
     if (otpResponse != null) {
-      print('✅ Nouveau code OTP envoyé');
       // Mettre à jour les données
       setState(() {
         expiresAt = otpResponse.expiresAt;
@@ -420,7 +413,6 @@ class _VerificationPageState extends State<VerificationPage> {
 
       authController.showSuccessMessage('Nouveau code envoyé !');
     } else {
-      print('❌ Échec du renvoi du code OTP');
       // En cas d'erreur, le message s'affiche automatiquement via Obx()
       // Afficher un message d'aide supplémentaire
       authController.showErrorMessage(

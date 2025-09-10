@@ -134,7 +134,6 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                       ),
                     ),
 
-                    // Espace adaptatif après titre
                     SizedBox(height: isSmallScreen ? 32 : 60),
 
                     // Avatar et bouton d'ajout

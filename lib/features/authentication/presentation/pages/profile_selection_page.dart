@@ -17,37 +17,37 @@ class _ProfileSelectionPageState extends State<ProfileSelectionPage> {
     ProfileOption(
       id: 'eleve',
       title: 'Élève',
-      icon: Icons.people, // Remplace par ton icône
+      icon: Icons.people,
     ),
     ProfileOption(
       id: 'etudiant',
       title: 'Étudiant',
-      icon: Icons.school, // Remplace par ton icône
+      icon: Icons.school,
     ),
     ProfileOption(
       id: 'repetiteur',
       title: 'Repetiteur',
-      icon: Icons.person_outline, // Remplace par ton icône
+      icon: Icons.person_outline,
     ),
     ProfileOption(
       id: 'repititeur',
       title: 'Répititeur',
-      icon: Icons.person_outline, // Remplace par ton icône
+      icon: Icons.person_outline,
     ),
     ProfileOption(
       id: 'parent',
       title: 'Parent d\'élève',
-      icon: Icons.visibility, // Remplace par ton icône
+      icon: Icons.visibility,
     ),
     ProfileOption(
       id: 'livreur',
       title: 'Livreur',
-      icon: Icons.delivery_dining, // Remplace par ton icône
+      icon: Icons.delivery_dining,
     ),
     ProfileOption(
       id: 'conducteur',
       title: 'Conducteur',
-      icon: Icons.local_shipping, // Remplace par ton icône
+      icon: Icons.local_shipping,
     ),
   ];
 
